@@ -10,7 +10,23 @@ Synthetic data only. Flask REST API + Postgres, on Docker and Minikube, with App
 | GET | `/patients/<id>` | get one → `200`; missing → `404` |
 | GET | `/patients` | list all |
 
+## 0. Run locally — just Python (no Docker)
+Uses SQLite automatically when no `DB_HOST` is set.
+```bash
+pip install flask
+python app.py
+```
+Then:
+```bash
+curl http://localhost:5000/health
+curl -X POST http://localhost:5000/patients -H "Content-Type: application/json" -d '{"name":"Asha","age":30,"ailment":"fever"}'
+curl http://localhost:5000/patients/1
+curl -X POST http://localhost:5000/patients -H "Content-Type: application/json" -d '{"name":"x"}'   # 400
+curl http://localhost:5000/patients/999   # 404
+```
+
 ## 1. Run with Docker (custom bridge, DB port NOT published)
+Set `DB_HOST` and it uses Postgres instead of SQLite.
 ```bash
 docker compose up --build -d
 ```

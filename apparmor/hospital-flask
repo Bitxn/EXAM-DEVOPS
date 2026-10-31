@@ -1,0 +1,12 @@
+#include <tunables/global>
+
+profile hospital-flask flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/python>
+
+  network inet tcp,
+  /app/** r,
+  /tmp/** rw,
+  deny /etc/** w,
+  deny /root/** rw,
+}
